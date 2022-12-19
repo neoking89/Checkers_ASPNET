@@ -3,14 +3,21 @@ using Core.Interfaces;
 using Infrastructure.Repositories;
 using Core.GameContext;
 using Microsoft.EntityFrameworkCore;
+using Core.Services;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddTransient<IGameRepository, GameRepository>();
-builder.Services.AddDbContext<GameContext>(options => options.UseSqlServer("server=.\\sqlexpress;db=Checkers;integrated security=true"));
+//builder.Services.AddDbContext<GameContext>(options =>
+//{
+//    options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true");
+//});
+//builder.Services.AddTransient<IGameRepository, GameRepository>();
+
 //builder.Services.AddTransient<IPlayerRepository, PlayerRepository>(); // altijd een nieuwe. voordelig qua side effects
 
 var app = builder.Build();

@@ -8,7 +8,7 @@ using Core.Entities;
 
 namespace Core.Services
 {
-    internal class GameService : IGameService
+    public class GameService : IGameService
 	{
 		private readonly IGameRepository _repo;
 
@@ -17,7 +17,7 @@ namespace Core.Services
 			_repo = repo;
 
 		}
-
+		
         public void CreateGame(Player player1, Player player2)
         {
             _repo.CreateGame(player1, player2);

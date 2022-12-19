@@ -11,16 +11,17 @@ namespace Core.Entities;
 public class Game
 {
 	public int Id { get; set; }
-	public Dictionary<Player, Color> Players { get; set; } = new Dictionary<Player, Color>();
+	public Dictionary<Player, Color> Players { get; set; }
 	public Board Board { get; set; }
 	public DateTime TimeCreated { get; set; }
 	public bool IsOver { get; set; }
 	public Game(Player player1, Player player2)
 	{
 		Board = new Board();
-		Board.CreateBoard();
+        Board.CreateBoard();
 		Board.InitializePiecesOnBoard();
-		Players.Add(player1, Color.White);
+        Players = new Dictionary<Player, Color>();
+        Players.Add(player1, Color.White);
 		Players.Add(player2, Color.Black);
 		TimeCreated = DateTime.Now;
 		IsOver = false;
