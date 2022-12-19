@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{9DDECFA9-9CC4-48FB-9AAC-252C26B62198}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Checkers.Tests", "Checkers.Tests\Checkers.Tests.csproj", "{BD6E45AA-7B8F-46E2-8F4D-E9E9A1083276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Checkers.Tests", "Checkers.Tests\Checkers.Tests.csproj", "{BD6E45AA-7B8F-46E2-8F4D-E9E9A1083276}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8508C5CB-9614-45AB-89C1-79F2A60DE66A}"
+	ProjectSection(SolutionItems) = preProject
+		TODO.txt = TODO.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

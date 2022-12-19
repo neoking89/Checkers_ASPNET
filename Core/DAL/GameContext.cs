@@ -11,28 +11,29 @@ using Microsoft.Extensions.Configuration;
 namespace Core.GameContext;
 public class GameContext : DbContext
 {
-
     public DbSet<Game> Games { get; set; }
-
-    public GameContext()
+    public DbSet<Player> Players { get; set; }
+    public GameContext
+    (
+        DbContextOptions<GameContext> options
+    ) : base(options)
     {
+    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    var builder = new ConfigurationBuilder();
+    //    var configuration = builder.Build();
+    //    var connectionString = "server=.;Initial Catalog=Checkers;integrated security=true";
+    //    optionsBuilder.UseSqlServer(connectionString);
+    //    base.OnConfiguring(optionsBuilder);
+    //}
 
-    }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var builder = new ConfigurationBuilder();
-        var configuration = builder.Build();
-        var connectionString = "server=.;Initial Catalog=Checkers;integrated security=true";
-        optionsBuilder.UseSqlServer(connectionString);
-        base.OnConfiguring(optionsBuilder);
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Game>()
-        .Property(f => f.Id)
-        .ValueGeneratedOnAdd();
-    }
+    //protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //{
+    //    modelBuilder.Entity<Game>()
+    //    .Property(f => f.Id)
+    //    .ValueGeneratedOnAdd();
+    //}
 }
 
 

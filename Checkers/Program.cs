@@ -12,10 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-//builder.Services.AddDbContext<GameContext>(options =>
-//{
-//    options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true");
-//});
+builder.Services.AddDbContext<GameContext>(options =>
+{
+	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true");
+});
 //builder.Services.AddTransient<IGameRepository, GameRepository>();
 
 //builder.Services.AddTransient<IPlayerRepository, PlayerRepository>(); // altijd een nieuwe. voordelig qua side effects

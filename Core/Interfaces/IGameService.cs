@@ -1,11 +1,13 @@
 ﻿using Core.Entities;
 
-namespace Core.Interfaces;
-
-public interface IGameService
+namespace Core.Interfaces
 {
-    void AddGame(Game game);
-    void DeleteGame(Game game);
-    void GetGameById(int id);
-    void UpdateGame(Game game);
+    public interface IGameService
+    {
+        void AddGame(Game game);
+        void CreateGame(string blackPlayer, string whitePlayer);
+        void DeleteGame(Game game);
+        void GetGameById(int id);
+        void UpdateGame(Game game);
+    }
 }

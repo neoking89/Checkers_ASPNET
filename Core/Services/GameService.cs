@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Interfaces;
 using Core.Entities;
+using Core.Interfaces;
 
 namespace Core.Services
 {
-    public class GameService : IGameService
+    public class GameService
 	{
 		private readonly IGameRepository _repo;
 
 		public GameService(IGameRepository repo)
 		{
 			_repo = repo;
-
 		}
-		
-        public void CreateGame(Player player1, Player player2)
+
+        public void CreateGame(string blackPlayer, string whitePlayer)
         {
-            _repo.CreateGame(player1, player2);
+            _repo.CreateGame(blackPlayer, whitePlayer);
         }
 
 		public void GetGameById(int id)

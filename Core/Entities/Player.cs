@@ -10,11 +10,15 @@ namespace Core.Entities
 	{
 		public int Id { get; set; }
 		public string Name { get; set; }
+        public bool IsWhite { get; set; }
+        public bool ToPlay { get; set; }
 
-		public Player(int id, string name)
-		{
-			Id = id;
-			Name = name;
-		}
+        public Player(string name, bool isWhite)
+        {
+            Name = name;
+            IsWhite = isWhite;
+            ToPlay = isWhite;
+        }
+
 	}
 }

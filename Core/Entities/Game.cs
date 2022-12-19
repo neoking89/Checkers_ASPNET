@@ -11,21 +11,29 @@ namespace Core.Entities;
 public class Game
 {
 	public int Id { get; set; }
-	public Dictionary<Player, Color> Players { get; set; }
-	public Board Board { get; set; }
+    public string WhitePlayer { get; set; }
+    public string BlackPlayer { get; set; }
+    public Board Board { get; set; }
 	public DateTime TimeCreated { get; set; }
 	public bool IsOver { get; set; }
-	public Game(Player player1, Player player2)
-	{
-		Board = new Board();
+    public ICollection<Player> Players { get; set; }
+    public Game(string whitePlayer, string blackPlayer)
+    {
+        WhitePlayer = whitePlayer;
+        BlackPlayer = blackPlayer;
+        Board = new Board();
         Board.CreateBoard();
-		Board.InitializePiecesOnBoard();
-        Players = new Dictionary<Player, Color>();
-        Players.Add(player1, Color.White);
-		Players.Add(player2, Color.Black);
-		TimeCreated = DateTime.Now;
-		IsOver = false;
-	}
+        Board.InitializePiecesOnBoard();
+        TimeCreated = DateTime.Now;
+        IsOver = false;
+        Players = new List<Player>
+        {
+            new Player(whitePlayer, true),
+            new Player(blackPlayer, false)
+        };
+        
+    }
+
 
 	public void MovePiece((int, int) from, (int, int) to)
 	{

@@ -1,6 +1,7 @@
 ﻿using Core.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,11 @@ namespace Core.Entities;
 /// </summary>
 public class Board
 {
+    public int Id { get; set; }
+    [NotMapped]
 	public Color[,] Fields { get; set; } = new Color[10, 10];
-	public Dictionary<(int, int), Piece> CurrentPiecePositions { get; set; } = new Dictionary<(int, int), Piece>();
+    [NotMapped]
+    public Dictionary<(int, int), Piece> CurrentPiecePositions { get; set; } = new Dictionary<(int, int), Piece>();
 
 	public Board()
 	{
