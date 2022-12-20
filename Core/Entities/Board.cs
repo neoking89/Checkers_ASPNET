@@ -56,6 +56,7 @@ public class Board
 		}
 	}
 	
+
 	public Piece? this[int y, int x]
 	{
 		get
@@ -69,16 +70,4 @@ public class Board
 		}
 	}
 
-	//public void PrintBoard()
-	//{
-	//	Console.WriteLine("------------------------------");
-
-	//	foreach (var item in CurrentPiecePositions)
-	//	{
-	//		string symbol = item.Value.Color == Color.White ? "W" : "B";
-	//		Console.Write($"| {symbol} ");
-	//	}
-
-	//	Console.WriteLine("------------------------------");
-	//}
 }

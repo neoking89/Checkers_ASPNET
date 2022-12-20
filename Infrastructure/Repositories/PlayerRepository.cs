@@ -1,18 +1,13 @@
 ﻿using Core.Entities;
-using Core.GameContext;
+using Core.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Interfaces;
 
 namespace Infrastructure.Repositories;
-
-public interface IPlayerRepository
-{
-    List<Player> GetAllPlayers();
-    Player GetPlayerById(int id);
-}
 
 
 public class PlayerRepository : IPlayerRepository
@@ -34,4 +29,9 @@ public class PlayerRepository : IPlayerRepository
         return _context.Players.Find(id);
     }
 
+    public void DeleteAllPlayers()
+    {
+        _context.Players.RemoveRange(_context.Players);
+        _context.SaveChanges();
+    }
 }

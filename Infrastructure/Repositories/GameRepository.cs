@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Core.Entities;
-using Core.GameContext;
+using Core.DatabaseContext;
 using Core.Interfaces;
+using Core.Enums;
 
 
 namespace Infrastructure.Repositories;
@@ -20,19 +21,19 @@ public class GameRepository : IGameRepository
         _context = context;
     }
 
-    public void CreateGame(string whitePlayer, string blackPlayer)
+    public Game CreateGame(string whitePlayer, string blackPlayer)
     {
         var game = new Game(whitePlayer, blackPlayer);
-        Player player1 = new Player(whitePlayer, true);
-        Player player2 = new Player(blackPlayer, false);
-        _context.Players.AddRange(player1, player2);
-        _context.Games.Add(game);
-        _context.SaveChanges();
+        Player player1 = new Player(whitePlayer, Color.White);
+        Player player2 = new Player(blackPlayer, Color.Black);
+        //_context.Players.AddRange(player1, player2);
+        AddGame(game);
+        return game;
     }
 
-    public void GetGameById(int id)
+    public Game? GetGameById(int id)
     {
-        _context.Games.Find(id);
+        return _context.Games.Find(id);
     }
 
     public void AddGame(Game game)
@@ -52,5 +53,26 @@ public class GameRepository : IGameRepository
         _context.Games.Remove(game);
         _context.SaveChanges();
     }
+
+    public void DeleteAllGames()
+    {
+        _context.Games.RemoveRange(_context.Games);
+        _context.SaveChanges();
+    }
+
+
+    // seperate gamerepo and boardrepo
+    //public Piece?[,] GetLastGameState()
+    //{
+    //    Game lastGame = _context.Games.OrderByDescending(g => g.Id).First();
+    //    var lastGameState = lastGame.Board.CurrentPiecePositions;
+    //    Piece?[,] board = new Piece?[10, 10];
+    //    foreach (var (position, piece) in lastGameState)
+    //    {
+    //        board[position.Item1, position.Item2] = piece;
+    //    }
+    //    return board;
+
+    //}
 
 }

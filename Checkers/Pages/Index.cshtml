@@ -5,11 +5,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <h3>Jean Houdt Van Damme!</h3>
-    <li>
-        <button>Start Spel!</button>
-    </li>
+        <form method="post" asp-page="/Game">
+            <button type="submit">Start spel!</button>
+        </form>
     <img class="block" src="~/images/jean_houdt_van_damme.png" alt="jean-image" />
 </div>
+
+
+@*<a asp-page="/Game">Game</a>*@

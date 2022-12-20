@@ -1,1 +1,2 @@
-# Update-Database 
+1. Update-Database  cmd in package manager
+2. check if services can be ran from Checkers in a seperate dir

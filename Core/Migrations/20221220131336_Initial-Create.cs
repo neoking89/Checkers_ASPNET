@@ -6,23 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Core.Migrations
 {
     /// <inheritdoc />
-    public partial class InititialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Board",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Board", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Games",
                 columns: table => new
@@ -31,19 +19,12 @@ namespace Core.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WhitePlayer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BlackPlayer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BoardId = table.Column<int>(type: "int", nullable: false),
                     TimeCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsOver = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Games", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Games_Board_BoardId",
-                        column: x => x.BoardId,
-                        principalTable: "Board",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,7 +34,7 @@ namespace Core.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsWhite = table.Column<bool>(type: "bit", nullable: false),
+                    Color = table.Column<int>(type: "int", nullable: false),
                     ToPlay = table.Column<bool>(type: "bit", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -66,11 +47,6 @@ namespace Core.Migrations
                         principalTable: "Games",
                         principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Games_BoardId",
-                table: "Games",
-                column: "BoardId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Players_GameId",
@@ -86,9 +62,6 @@ namespace Core.Migrations
 
             migrationBuilder.DropTable(
                 name: "Games");
-
-            migrationBuilder.DropTable(
-                name: "Board");
         }
     }
 }

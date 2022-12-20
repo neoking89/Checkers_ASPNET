@@ -1,9 +1,11 @@
 
 using Core.Interfaces;
 using Infrastructure.Repositories;
-using Core.GameContext;
+using Core.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
-using Core.Services;
+
+
+
 
 
 
@@ -14,11 +16,10 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<GameContext>(options =>
 {
-	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true");
+	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true;TrustServerCertificate=true");
 });
-//builder.Services.AddTransient<IGameRepository, GameRepository>();
-
-//builder.Services.AddTransient<IPlayerRepository, PlayerRepository>(); // altijd een nieuwe. voordelig qua side effects
+builder.Services.AddTransient<IGameRepository, GameRepository>();
+builder.Services.AddTransient<IPlayerRepository, PlayerRepository>();
 
 var app = builder.Build();
 

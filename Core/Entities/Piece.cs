@@ -30,7 +30,7 @@ public class Piece
 
 	public override string ToString()
 	{
-		var color = Color == Color.White ? "W" : "B";
+		var color = Color == Color.White ? "white" : "black";
 		return $"{color}, {CurrentPosition}";
 	}
 
@@ -42,7 +42,7 @@ public class Piece
 		}
 	}
 
-	public void MovePiece((int, int) position)
+	public void Move((int, int) position)
 	{
 		// TODO: Check if move is valid
 		CurrentPosition = position;
