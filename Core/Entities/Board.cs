@@ -14,12 +14,12 @@ namespace Core.Entities;
 /// </summary>
 public class Board
 {
-    public int Id { get; set; }
-    [NotMapped]
-	public Color[,] Fields { get; set; } = new Color[10, 10];
-    [NotMapped]
-    public Dictionary<(int, int), Piece> CurrentPiecePositions { get; set; } = new Dictionary<(int, int), Piece>();
-
+	public int Id { get; set; }
+	[NotMapped]
+	public Color[,] Squares { get; set; } = new Color[10, 10];
+	[NotMapped]
+	public Piece?[,] Pieces { get; set; } = new Piece?[10,10];
+    
 	public Board()
 	{
 	}
@@ -33,10 +33,14 @@ public class Board
 		{
 			for (int x = 0; x < 10; x++)
 			{
-				if ((y < 3 || y > 6) && Fields[y, x] == Color.Black)
+				if ((y < 3 || y > 6) && Squares[y, x] == Color.Black)
 				{
-					CurrentPiecePositions.Add((y, x), new Piece(color: y < 3 ? Color.White : Color.Black, position: (y, x)));
+					Pieces[y, x] = new Piece(color: y < 3 ? Color.White : Color.Black, position: (y,x));   
 				}
+				else
+				{
+                    Pieces[y, x] = null;
+                }
 			}
 		}
 	}
@@ -45,12 +49,12 @@ public class Board
 	/// </summary>
 	public void CreateBoard()
 	{
-		for (int i = 0; i < Fields.GetLength(dimension: 0); i++)
+		for (int i = 0; i < Squares.GetLength(dimension: 0); i++)
 		{
-			for (int j = 0; j < Fields.GetLength(1); j++)
+			for (int j = 0; j < Squares.GetLength(1); j++)
 			{
 				bool ColorChoice = (i + j) % 2 == 0;
-				Fields[i, j] = ColorChoice ? Color.Black : Color.White;
+				Squares[i, j] = ColorChoice ? Color.Black : Color.White;
 
 			}
 		}
@@ -61,13 +65,8 @@ public class Board
 	{
 		get
 		{
-			if (CurrentPiecePositions.ContainsKey((y, x)))
-			{
-				return CurrentPiecePositions[(y, x)];
-			}
-
-			return null;
-		}
+            return Pieces[y, x];
+        }
 	}
 
 }

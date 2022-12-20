@@ -1,73 +1,101 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
+using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
+
 
 namespace Core.Entities;
-
 public class Game
 {
 	public int Id { get; set; }
-    public string WhitePlayer { get; set; }
-    public string BlackPlayer { get; set; }
-    [NotMapped]
-    public Board Board { get; set; }
+	public string WhitePlayer { get; set; }
+	public string BlackPlayer { get; set; }
+	[NotMapped]
+	public Board Board { get; set; }
 	public DateTime TimeCreated { get; set; }
 	public bool IsOver { get; set; }
-    public ICollection<Player> Players { get; set; }
-    public Game(string whitePlayer = "", string blackPlayer= "")
-    {
-        WhitePlayer = whitePlayer;
-        BlackPlayer = blackPlayer;
-        Board = new Board();
-        Board.CreateBoard();
-        Board.InitializePiecesOnBoard();
-        TimeCreated = DateTime.Now;
-        IsOver = false;
-        Players = new List<Player>
-        {
-            new Player(WhitePlayer, Color.White),
-            new Player(BlackPlayer, Color.Black)
-        };
-
-    }
-	public void MovePiece((int, int) from, (int, int) to)
+	public ICollection<Player> Players { get; set; }
+	public Game(string whitePlayer = "", string blackPlayer= "")
 	{
-		if (Board.CurrentPiecePositions.ContainsKey(from))
+		WhitePlayer = whitePlayer;
+		BlackPlayer = blackPlayer;
+		Board = new Board();
+		Board.CreateBoard();
+		Board.InitializePiecesOnBoard();
+		TimeCreated = DateTime.Now;
+		IsOver = false;
+		Players = new List<Player>
 		{
-			var piece = Board.CurrentPiecePositions[from];
-			Board.CurrentPiecePositions.Remove(from);
-			Board.CurrentPiecePositions.Add(to, piece);
-        }
+			new Player(whitePlayer, Color.White),
+			new Player(blackPlayer, Color.Black)
+		};
+
 	}
 
-    public Piece?[,] GetLastState()
-    {
-        var lastGameState = Board.CurrentPiecePositions;
-        Piece?[,] board = new Piece?[10, 10];
-        foreach (var (position, piece) in lastGameState)
-        {
-            board[position.Item1, position.Item2] = piece;
-        }
-        return board;
+    /// <summary>
+	/// Start a game of checkers.
+	/// </summary>
+	public bool Start()
+	{
+		while (!IsOver)
+		{
+			foreach (Player player in Players)
+			{
+				// All Gamelogic here...
+				Turn(player);
+				//IsOver Check
+			}
+		}
+        return IsOver;
     }
 
-    public void CheckLegalMoves()
-    {
-        for (int y = 0; y < 10; y++)
+
+	public void Turn(Player player)
+	{
+        var playerPieces = GetPiecesForPlayer(player);
+        foreach (var piece in playerPieces)
         {
-            for (int x = 0; x < 10; x++)
-            {
-                // DO CHECK HERE
-            }
+			//GetPossibleMoves()?
         }
     }
+
+	public Piece?[,] GetLastBoardState()
+	{
+		return Board.Pieces;
+	}
 
     
+	public void MovePiece((int, int) from, (int, int) to)
+	{
+		var piece = Board.Pieces[from.Item1, from.Item2];
+		if (piece != null)
+		{
+			//ValidateMove(piece, to);
+			Board.Pieces[from.Item1, from.Item2] = null;
+			Board.Pieces[to.Item1, to.Item2] = piece;
+		}
+	}
+
+    /// <summary>
+    /// Return an IEnumerable of all the available color pieces for a specific player.
+    /// </summary>
+    public IEnumerable<Piece?> GetPiecesForPlayer(Player player)
+	{
+		IEnumerable<Piece?> enumerable = Board.Pieces.Cast<Piece?>();
+		var playerPieces =
+		from piece in enumerable
+		where piece.Color == player.Color
+		select piece;
+
+		return playerPieces;
+	}
 
 
 }

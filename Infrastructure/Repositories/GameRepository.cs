@@ -65,7 +65,7 @@ public class GameRepository : IGameRepository
     //public Piece?[,] GetLastGameState()
     //{
     //    Game lastGame = _context.Games.OrderByDescending(g => g.Id).First();
-    //    var lastGameState = lastGame.Board.CurrentPiecePositions;
+    //    var lastGameState = lastGame.Board.Pieces;
     //    Piece?[,] board = new Piece?[10, 10];
     //    foreach (var (position, piece) in lastGameState)
     //    {

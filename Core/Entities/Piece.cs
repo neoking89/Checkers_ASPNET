@@ -13,40 +13,40 @@ namespace Core.Entities;
 public class Piece 
 {
 	public Color Color { get; set; }
-	public (int, int)? CurrentPosition { get; set; }
-	public bool InPlay
+	public (int, int)? Position { get; set; }
+    public bool InPlay
 	{
 		get
 		{
-			return (CurrentPosition != null);
+			return (Position != null);
 		}
 	}
+    public bool IsPromoted { get; set; } = false;
 
-	public Piece(Color color, (int, int) position)
+    public Piece(Color color, (int, int) position)
 	{
 		Color = color;
-		CurrentPosition = position;
-	}
-
-	public override string ToString()
-	{
-		var color = Color == Color.White ? "white" : "black";
-		return $"{color}, {CurrentPosition}";
+		Position = position;
 	}
 
 	public (int, int)? this[int y, int x]
 	{
 		get
 		{
-			return CurrentPosition;
+			return Position;
 		}
 	}
 
-	public void Move((int, int) position)
-	{
-		// TODO: Check if move is valid
-		CurrentPosition = position;
-	}
+    public void Promote()
+    {
+        IsPromoted = true;
+    }
+
+	public override string ToString()
+    {
+        var color = Color == Color.White ? "white" : "black";
+        return $"{color}, {Position}";
+    }
 
 
 }

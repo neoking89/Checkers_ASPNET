@@ -16,11 +16,14 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<GameContext>(options =>
 {
-	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true;TrustServerCertificate=true");
+	options.UseInMemoryDatabase("tempdb");
 });
+//builder.Services.AddDbContext<GameContext>(options =>
+//{
+//	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true;TrustServerCertificate=true");
+//});
 builder.Services.AddTransient<IGameRepository, GameRepository>();
 builder.Services.AddTransient<IPlayerRepository, PlayerRepository>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
