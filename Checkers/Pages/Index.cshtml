@@ -15,7 +15,11 @@
             <input asp-for="BlackPlayerName" />
         <br />
             <button type="submit">Start spel!</button>
-        </form>
+		@if (Model.ErrorMessage.Length > 0)
+		{
+			<p>@Model.ErrorMessage</p>
+		}
+	</form>
     <img class="block" src="~/images/jean_houdt_van_damme.png" alt="jean-image" />
 </div>
 

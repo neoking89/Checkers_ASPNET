@@ -40,14 +40,20 @@ namespace Checkers.Pages
             this.Game = newGame;
         }
 
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
+
         public void OnPost()
         {
-            if (ModelState.IsValid)
-            {
-                //Game = _gameRepository.CreateGame("White", "Black");
-                //Players = _playerRepository.GetAllPlayers();
-                //CurrentBoardState = Game.BoardState;
-            }
+            return Page();
+            //if (ModelState.IsValid)
+            //{
+            //    //Game = _gameRepository.CreateGame("White", "Black");
+            //    //Players = _playerRepository.GetAllPlayers();
+            //    //CurrentBoardState = Game.BoardState;
+            //}
         }
     }
 }

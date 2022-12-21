@@ -29,13 +29,26 @@
 
 <h1>@Model.Game!.BlackPlayer</h1>
 <div class="checkersboard">
-    @for (int y = 0; y < 10; y++)
+    @for (int y = 9; y >= 0; y--)
     {
-        for (int x = 0; x < 10; x++)
+        for (int x = 9; x >= 0; x--)
         {
             var squareColor = Model.Game.Board.Squares[y, x] == Color.White ? "white" : "black";
             <div class="@squareColor"></div>
+
             // how to draw checkerpieces now????
+            var pieceColor = @Model.Game.Board.Pieces[y, x];
+            if (pieceColor != null)
+			{
+				if (pieceColor.Color == Color.White)
+				{
+                    <img src="~/images/white_piece.png" alt="white-piece" style="max-width:10%;" />
+				}
+@*				else
+				{
+					<img src="~/images/black_piece.jpg" alt="black-piece" />
+				}*@
+			}
         }
     }
 </div>

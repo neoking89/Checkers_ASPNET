@@ -4,6 +4,8 @@ using Core.Interfaces;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Core.Enums;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Checkers.Pages;
 public class IndexModel : PageModel
@@ -11,28 +13,39 @@ public class IndexModel : PageModel
     private readonly IPlayerRepository _playerRepository;
     [BindProperty] public string WhitePlayerName { get; set; } = "";
     [BindProperty] public string BlackPlayerName { get; set; } = "";
-    public IndexModel(IPlayerRepository playerRepository)
+    public string ErrorMessage { get; set; } = "";
+	public IndexModel(IPlayerRepository playerRepository)
     {
         _playerRepository = playerRepository;
     }
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
-        
+        return Page();
     }
     
     public IActionResult OnPost()
     {
+		if (WhitePlayerName.IsNullOrEmpty() || BlackPlayerName.IsNullOrEmpty())
+        {
+            ErrorMessage = "Voer voor beide spelers een naam in";
+            return Page();
+        }
         if (ModelState.IsValid)
         {
-            //_playerRepository.AddPlayer(whitePlayer);
-            //_playerRepository.AddPlayer(blackPlayer);
             return RedirectToPage("Game", "NewGame", new Game(WhitePlayerName, BlackPlayerName));
         }
         else
         {
-            throw new Exception("Invalid model state" + ModelState.ValidationState);
-            //return Page();
-        }
+			var errors =
+					from value in ModelState.Values
+					where value.ValidationState == ModelValidationState.Invalid
+					select value;
+            foreach (var error in errors)
+            {
+                ErrorMessage += error.Errors[0].ErrorMessage;
+            }
+			return Page();
+		}
     }
 }
