@@ -22,8 +22,11 @@ builder.Services.AddDbContext<GameContext>(options =>
 //{
 //	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true;TrustServerCertificate=true");
 //});
-builder.Services.AddTransient<IGameRepository, GameRepository>();
-builder.Services.AddTransient<IPlayerRepository, PlayerRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IPlayerRepository, PlayerRepository>();
+builder.Services.AddControllers();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +44,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();

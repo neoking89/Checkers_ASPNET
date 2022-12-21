@@ -12,6 +12,7 @@ using Core.Enums;
 
 namespace Infrastructure.Repositories;
 
+
 public class GameRepository : IGameRepository
 {
     private readonly GameContext _context;
@@ -21,39 +22,35 @@ public class GameRepository : IGameRepository
         _context = context;
     }
 
-    public Game CreateGame(string whitePlayer, string blackPlayer)
+    // SHOULD BE IN CONTROLLER
+
+
+    public async Task<Game?> GetGameById(int id)
     {
-        var game = new Game(whitePlayer, blackPlayer);
-        AddGame(game);
-        return game;
+        return await _context.Games.FindAsync(id);
     }
 
-    public Game GetGameById(int id)
+    public async Task AddGame(Game game)
     {
-        return _context.Games.Find(id);
+        await _context.Games.AddAsync(game);
+        await _context.SaveChangesAsync();
     }
 
-    public void AddGame(Game game)
-    {
-        _context.Games.Add(game);
-        _context.SaveChanges();
-    }
-
-    public void UpdateGame(Game game)
+    public async Task UpdateGame(Game game)
     {
         _context.Games.Update(game);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void DeleteGame(Game game)
+    public async Task DeleteGame(Game game)
     {
         _context.Games.Remove(game);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public void DeleteAllGames()
+    public async Task DeleteAllGames()
     {
         _context.Games.RemoveRange(_context.Games);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

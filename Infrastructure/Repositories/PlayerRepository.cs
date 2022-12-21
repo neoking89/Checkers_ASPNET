@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Interfaces;
 using Core.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -20,32 +21,37 @@ public class PlayerRepository : IPlayerRepository
         _context = context;
     }
 
-    public Player CreatePlayer(string name, Color color)
-    {
-        var player = new Player(name, color);
-        AddPlayer(player);
-        return player;
-    }
 
-    public void AddPlayer(Player player)
+    public async Task AddPlayer(Player player)
     {
         _context.Players.Add(player);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public List<Player> GetAllPlayers()
+    public async Task<List<Player>> GetAllPlayers()
     {
-        return _context.Players.ToList();
+        return await _context.Players.ToListAsync();
     }
 
-    public Player GetPlayerById(int id)
+    public async Task<Player?> GetPlayerById(int id)
     {
-        return _context.Players.Find(id);
+        return await _context.Players.FindAsync(id);
     }
 
-    public void DeleteAllPlayers()
+    public async Task<Player?> GetPlayerByName(string name)
+    {
+        return await _context.Players.FirstOrDefaultAsync(p => p.Name == name);
+    }
+
+    public async Task UpdatePlayer(Player player)
+    {
+        _context.Players.Update(player);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAllPlayers()
     {
         _context.Players.RemoveRange(_context.Players);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

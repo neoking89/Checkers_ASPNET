@@ -1,13 +1,17 @@
 ﻿using Core.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Core.Interfaces;
 
 public interface IGameRepository
 {
-    void AddGame(Game game);
-    Game CreateGame(string whitePlayer, string blackPlayer);
-    void DeleteGame(Game game);
-    Game GetGameById(int id);
-    void UpdateGame(Game game);
-    void DeleteAllGames();
+    Task AddGame(Game game);
+    Task DeleteAllGames();
+    Task DeleteGame(Game game);
+    Task<Game?> GetGameById(int id);
+    Task UpdateGame(Game game);
 }

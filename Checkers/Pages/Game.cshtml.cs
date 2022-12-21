@@ -45,7 +45,7 @@ namespace Checkers.Pages
             return Page();
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             return Page();
             //if (ModelState.IsValid)
