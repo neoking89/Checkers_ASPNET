@@ -24,14 +24,11 @@ public class GameRepository : IGameRepository
     public Game CreateGame(string whitePlayer, string blackPlayer)
     {
         var game = new Game(whitePlayer, blackPlayer);
-        Player player1 = new Player(whitePlayer, Color.White);
-        Player player2 = new Player(blackPlayer, Color.Black);
-        //_context.Players.AddRange(player1, player2);
         AddGame(game);
         return game;
     }
 
-    public Game? GetGameById(int id)
+    public Game GetGameById(int id)
     {
         return _context.Games.Find(id);
     }
@@ -59,20 +56,4 @@ public class GameRepository : IGameRepository
         _context.Games.RemoveRange(_context.Games);
         _context.SaveChanges();
     }
-
-
-    // seperate gamerepo and boardrepo
-    //public Piece?[,] GetLastGameState()
-    //{
-    //    Game lastGame = _context.Games.OrderByDescending(g => g.Id).First();
-    //    var lastGameState = lastGame.Board.Pieces;
-    //    Piece?[,] board = new Piece?[10, 10];
-    //    foreach (var (position, piece) in lastGameState)
-    //    {
-    //        board[position.Item1, position.Item2] = piece;
-    //    }
-    //    return board;
-
-    //}
-
 }

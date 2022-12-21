@@ -1,4 +1,5 @@
 ﻿@page
+@using Core.Enums;
 @model Checkers.Pages.GameModel
 @{
 }
@@ -20,25 +21,24 @@
         }
 
         .checkersboard .white {
-            background-color: white;
+			background-color: white;
         }
 
     }
 </style>
 
-
-@*Loop over Fields of Board instead of standard for loop*@
+<h1>@Model.Game!.BlackPlayer</h1>
 <div class="checkersboard">
     @for (int y = 0; y < 10; y++)
     {
-        @for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 10; x++)
         {
-            <div class="@((y+x) % 2 == 0 ? "white" : "black")"></div>
+            var squareColor = Model.Game.Board.Squares[y, x] == Color.White ? "white" : "black";
+            <div class="@squareColor"></div>
             // how to draw checkerpieces now????
-            
-
         }
     }
 </div>
+<h1>@Model.Game.WhitePlayer</h1>
 
 

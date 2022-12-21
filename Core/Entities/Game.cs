@@ -15,22 +15,26 @@ namespace Core.Entities;
 public class Game
 {
 	public int Id { get; set; }
-	public string WhitePlayer { get; set; }
-	public string BlackPlayer { get; set; }
+	public string? WhitePlayer { get; set; }
+	public string? BlackPlayer { get; set; }
 	[NotMapped]
-	public Board Board { get; set; }
-	public DateTime TimeCreated { get; set; }
+    public Board Board { get; set; } = new Board();
+    public DateTime TimeCreated { get; set; }
 	public bool IsOver { get; set; }
-	public ICollection<Player> Players { get; set; }
-	public Game(string whitePlayer = "", string blackPlayer= "")
+	public ICollection<Player>? Players { get; set; }
+	[NotMapped]
+	public List<string> PlayedMoves { get; set; } = new List<string>();
+	public Game()
+	{
+        Board.CreateBoard();
+        Board.InitializePiecesOnBoard();
+        TimeCreated = DateTime.Now;
+        IsOver = false;
+    }
+	public Game(string whitePlayer = "", string blackPlayer= "") : base()
 	{
 		WhitePlayer = whitePlayer;
 		BlackPlayer = blackPlayer;
-		Board = new Board();
-		Board.CreateBoard();
-		Board.InitializePiecesOnBoard();
-		TimeCreated = DateTime.Now;
-		IsOver = false;
 		Players = new List<Player>
 		{
 			new Player(whitePlayer, Color.White),
@@ -46,12 +50,16 @@ public class Game
 	{
 		while (!IsOver)
 		{
-			foreach (Player player in Players)
+			if (Players != null)
 			{
-				// All Gamelogic here...
-				Turn(player);
-				//IsOver Check
-			}
+                foreach (Player player in Players)
+                {
+                    // All Gamelogic here...
+                    Turn(player);
+                    //IsOver Check
+                }
+            }
+
 		}
         return IsOver;
     }

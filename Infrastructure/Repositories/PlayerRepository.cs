@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Interfaces;
+using Core.Enums;
 
 namespace Infrastructure.Repositories;
 
@@ -19,12 +20,25 @@ public class PlayerRepository : IPlayerRepository
         _context = context;
     }
 
+    public Player CreatePlayer(string name, Color color)
+    {
+        var player = new Player(name, color);
+        AddPlayer(player);
+        return player;
+    }
+
+    public void AddPlayer(Player player)
+    {
+        _context.Players.Add(player);
+        _context.SaveChanges();
+    }
+
     public List<Player> GetAllPlayers()
     {
         return _context.Players.ToList();
     }
 
-    public Player? GetPlayerById(int id)
+    public Player GetPlayerById(int id)
     {
         return _context.Players.Find(id);
     }

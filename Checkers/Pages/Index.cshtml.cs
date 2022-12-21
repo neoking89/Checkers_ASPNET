@@ -5,29 +5,34 @@ using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Core.Enums;
 
-namespace Checkers.Pages
+namespace Checkers.Pages;
+public class IndexModel : PageModel
 {
-	public class IndexModel : PageModel
-	{
-        private readonly IGameRepository _gameRepository;
-        private readonly IPlayerRepository _playerRepository;
-        [BindProperty] public Game Game { get; set; }
-        public List<Player> Players { get; set; }
-        public Piece?[,] CurrentBoardState { get; set; } = new Piece?[10, 10];
+    private readonly IPlayerRepository _playerRepository;
+    [BindProperty] public string WhitePlayerName { get; set; } = "";
+    [BindProperty] public string BlackPlayerName { get; set; } = "";
+    public IndexModel(IPlayerRepository playerRepository)
+    {
+        _playerRepository = playerRepository;
+    }
 
-        public IndexModel(IGameRepository gameRepository, IPlayerRepository playerRepository)
+    public void OnGet()
+    {
+        
+    }
+    
+    public IActionResult OnPost()
+    {
+        if (ModelState.IsValid)
         {
-            _gameRepository = gameRepository;
-            _playerRepository = playerRepository;
+            //_playerRepository.AddPlayer(whitePlayer);
+            //_playerRepository.AddPlayer(blackPlayer);
+            return RedirectToPage("Game", "NewGame", new Game(WhitePlayerName, BlackPlayerName));
         }
-        public void OnGet()
+        else
         {
-            _playerRepository.DeleteAllPlayers();
-            _gameRepository.DeleteAllGames();
-            Game = _gameRepository.CreateGame("White", "Black");
+            throw new Exception("Invalid model state" + ModelState.ValidationState);
+            //return Page();
         }
-            
-		
-		
-	}
+    }
 }

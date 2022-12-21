@@ -4,9 +4,16 @@
     ViewData["Title"] = "Home page";
 }
 
+
 <div class="text-center">
     <h3>Jean Houdt Van Damme!</h3>
-        <form method="post" asp-page="/Game">
+        <form method="post" asp-page="/Index">
+            <label asp-for="WhitePlayerName">White Player</label>
+            <input asp-for="WhitePlayerName" />
+        <br />
+            <label asp-for="BlackPlayerName">Black Player</label>
+            <input asp-for="BlackPlayerName" />
+        <br />
             <button type="submit">Start spel!</button>
         </form>
     <img class="block" src="~/images/jean_houdt_van_damme.png" alt="jean-image" />

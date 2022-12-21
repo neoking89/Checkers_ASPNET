@@ -21,20 +21,21 @@ namespace Core.Entities
             ToPlay = color == Color.White ? true : false;
         }
 
-        public static Board PromptMove(Player player, Board board)
-        {
-            Console.WriteLine("Enter the position of the piece you want to move.");
-            while
-            var input = Console.ReadLine();
-            var position = (int.Parse(input[0].ToString()), int.Parse(input[1].ToString()));
-            var piece = board[position];
-            if (piece.Color != player.Color)
-            {
-                Console.WriteLine("That is not your piece.");
-                return PromptMove(board);
-            }
-            return board;
-        }
+        //public static Board PromptMove(Player player, Board board)
+        //    // Replace by REST later!
+        //{
+        //    Console.WriteLine("Enter the position of the piece you want to move.");
+        //    while
+        //    var input = Console.ReadLine();
+        //    var position = (int.Parse(input[0].ToString()), int.Parse(input[1].ToString()));
+        //    var piece = board[position];
+        //    if (piece.Color != player.Color)
+        //    {
+        //        Console.WriteLine("That is not your piece.");
+        //        return PromptMove(board);
+        //    }
+        //    return board;
+        //}
 
     }
 

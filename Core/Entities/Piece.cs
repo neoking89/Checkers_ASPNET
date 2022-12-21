@@ -47,6 +47,4 @@ public class Piece
         var color = Color == Color.White ? "white" : "black";
         return $"{color}, {Position}";
     }
-
-
 }
