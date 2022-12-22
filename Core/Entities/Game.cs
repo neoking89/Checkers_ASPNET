@@ -14,36 +14,33 @@ using System.ComponentModel.DataAnnotations;
 namespace Core.Entities;
 public class Game
 {
-	[Key]
+    [Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int GameId { get; set; }
-    public string? WhitePlayer { get; set; }
-    public string? BlackPlayer { get; set; }
-    public DateTime TimeCreated { get; set; }
-    public bool IsOver { get; set; }
+	public int Id { get; set; }
+    //[ForeignKey("WhitePlayerId")]
     [NotMapped]
+	public Player? WhitePlayer { get; set; }
+    public int WhitePlayerId { get; set; }
+    [ForeignKey("BlackPlayerId")]
+    [NotMapped]
+	public Player? BlackPlayer { get; set; }
+	//public int BlackPlayerId { get; set; }
+	public DateTime? TimeCreated { get; set; } = DateTime.Now;
+	public bool IsOver { get; set; } = false;
+	[NotMapped]
     public Board Board { get; set; } = new Board();
-    [NotMapped]
-    public ICollection<Player> Players { get; set; } = new List<Player>();
     [NotMapped]
     public ICollection<Piece> Pieces { get; set; } = new List<Piece>();
     [NotMapped]
-    public ICollection<string> PlayedMoves { get; set; } = new List<string>();
+    public ICollection<string> Moves { get; set; } = new List<string>();
     public Game()
     {
         InitializePiecesOnBoard(Board);
-        TimeCreated = DateTime.Now;
-        IsOver = false;
     }
-    public Game(string whitePlayer = "", string blackPlayer = "") : base()
+    public Game(Player whitePlayer, Player blackPlayer) : this()
     {
-        WhitePlayer = whitePlayer;
+		WhitePlayer = whitePlayer;
         BlackPlayer = blackPlayer;
-        Players = new List<Player>
-        {
-            new Player(whitePlayer, Color.White),
-            new Player(blackPlayer, Color.Black)
-        };
     }
 
     /// <summary>
@@ -53,28 +50,17 @@ public class Game
     {
         while (!IsOver)
         {
-            if (Players != null)
-            {
-                foreach (Player player in Players)
-                {
-                    // All Gamelogic here...
-                    Turn(player);
-                    //IsOver Check
-                }
-            }
-
-        }
+            Turn(WhitePlayer);
+			Turn(BlackPlayer);
+		}
         return IsOver;
     }
 
 
     public void Turn(Player player)
     {
-        foreach (var piece in Pieces)
-        {
-            //GetPossibleMoves()?
-        }
-    }
+		var playerPieces = Pieces.Where(p => p.Color == player.Color);
+	}
 
     /// <summary>
     /// Creates pieces on the board
@@ -92,7 +78,6 @@ public class Game
             }
         }
     }
-    
 }
 	
  //   public void MovePiece((int, int) from, (int, int) to)

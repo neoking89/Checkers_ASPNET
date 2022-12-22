@@ -9,7 +9,7 @@ namespace Core.Interfaces;
 
 public interface IGameRepository
 {
-    Task AddGame(Game game);
+    void AddGame(Game game);
     Task DeleteAllGames();
     Task DeleteGame(Game game);
     Task<Game?> GetGameById(int id);

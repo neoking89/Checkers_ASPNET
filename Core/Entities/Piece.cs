@@ -18,12 +18,15 @@ public class Piece
 {
     [Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-	public int PlayerId { get; set; }
-	public int GameId { get; set; }
-    public Color Color { get; set; }
+	public int Id { get; set; }
+	public Color Color { get; set; }
     public bool InPlay { get; set; }
     public bool IsPromoted { get; set; } = false;
-	[NotMapped]
+    public int GameId { get; set; }
+    [ForeignKey("GameId")]
+    public Game? Game { get; set; }
+
+    [NotMapped]
 	public (int?, int?) Position
 	{
 		get
@@ -63,11 +66,8 @@ public class Piece
         set { _y = value; }
     }
 
-
-    public Piece()
-    { }
-    
-    public Piece(Color color, int x, int y) : base()
+    public Piece() { }
+    public Piece(Color color, int x, int y) 
     {
         Color = color;
         X = x;

@@ -1,15 +1,3 @@
-//using Core.Entities;
-//using Core.Interfaces;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.RazorPages;
-
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.RazorPages;
-//using Core.Interfaces;
-//using Core.Entities;
-//using Microsoft.EntityFrameworkCore;
-//using Core.Enums;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core.Interfaces;
@@ -24,22 +12,22 @@ namespace Checkers.Pages
         private readonly IGameRepository _gameRepository;
         private readonly IPlayerRepository _playerRepository;
         [BindProperty] public Game? Game { get; set; }
-        public List<Player> Players { get; set; } = new List<Player>();
-        public Piece?[,] CurrentBoardState { get; set; } = new Piece?[10, 10];
         public GameModel(IGameRepository gameRepository, IPlayerRepository playerRepository)
         {
             _gameRepository = gameRepository;
             _playerRepository = playerRepository;
         }
         
-        public IActionResult OnGetNewGame(Game newGame)
+        public IActionResult OnGetNewGame(string? playerNames)
         {
-            if (newGame == null)
+            if (playerNames != null)
             {
-                throw new NullReferenceException("newGame is null");
+                string[] splittedString = playerNames.Split("_");
+                var whitePlayer = new Player(splittedString[0], Color.White);
+                var blackPlayer = new Player(splittedString[1], Color.Black);
+                this.Game = new Game(whitePlayer, blackPlayer);
+                WriteNewGameToDatabase(this.Game);
             }
-            this.Game = newGame;
-            WriteNewGameToDatabase(this.Game);
             return Page();
         }
         
@@ -47,12 +35,10 @@ namespace Checkers.Pages
         public void WriteNewGameToDatabase(Game newGame)
         {
             _gameRepository.AddGame(newGame);
-            foreach (var player in newGame.Players)
-            {
-                _playerRepository.AddPlayer(player);
-            }
-        }
-        
+            //_playerRepository.AddPlayer(newGame.WhitePlayer);
+			//_playerRepository.AddPlayer(newGame.BlackPlayer);
+
+		}
 
         public IActionResult OnGet()
         {

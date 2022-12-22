@@ -29,7 +29,7 @@ public class GamesController : Controller
     }
 
     [HttpPost]
-    public Game CreateGame(string whitePlayer, string blackPlayer)
+    public Game CreateGame(Player whitePlayer, Player blackPlayer)
     {
         var game = new Game(whitePlayer, blackPlayer);
         _gameRepository.AddGame(game);

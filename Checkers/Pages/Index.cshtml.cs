@@ -33,7 +33,8 @@ public class IndexModel : PageModel
 		}
 		if (ModelState.IsValid)
 		{
-			return RedirectToPage("Game", "NewGame", new Game(WhitePlayerName, BlackPlayerName));
+			var tempString = WhitePlayerName + "_" + BlackPlayerName;
+			return RedirectToPage("Game", "NewGame", new {playerNames = tempString});
 		}
 		else
 		{

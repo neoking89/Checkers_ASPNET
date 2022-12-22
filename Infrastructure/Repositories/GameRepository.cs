@@ -30,11 +30,17 @@ public class GameRepository : IGameRepository
         return await _context.Games.FindAsync(id);
     }
 
-    public async Task AddGame(Game game)
+    public void AddGame(Game game)
     {
-        await _context.Games.AddAsync(game);
-        await _context.SaveChangesAsync();
+        _context.Games.Add(game);
+        _context.SaveChanges();
     }
+
+    //public async Task AddGame(Game game)
+    //{
+    //    _context.Games.Add(game);
+    //    await _context.SaveChangesAsync();
+    //}
 
     public async Task UpdateGame(Game game)
     {

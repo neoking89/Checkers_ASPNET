@@ -13,16 +13,15 @@ namespace Core.Entities
 	{
         [Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int PlayerId { get; set; }
-		public int GameId { get; set; }
+		public int Id { get; set; }
         public string? Name { get; set; }
         public Color Color { get; set; }
         public bool ToPlay { get; set; }
+        [NotMapped]
+        public ICollection<Game?>? Games { get; set; }
 
-        public Player()
-        {
-        }
-        public Player(string name = "", Color color = Color.White) : base()
+        public Player() { }
+        public Player(string name = "", Color color = Color.White) 
         {
             Name = name;
             Color = color;
