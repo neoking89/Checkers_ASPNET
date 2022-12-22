@@ -22,7 +22,7 @@ public class GamesController : Controller
         _gameRepository = gameRepository;
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         return View();
         //return View(await _gameRepository.GetAllGames());

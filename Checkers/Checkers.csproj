@@ -31,7 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\images\Example.jpg" />
     <None Include="wwwroot\images\jean_houdt_van_damme.png" />
   </ItemGroup>
 

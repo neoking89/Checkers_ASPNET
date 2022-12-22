@@ -31,14 +31,28 @@ namespace Checkers.Pages
             _gameRepository = gameRepository;
             _playerRepository = playerRepository;
         }
-        public void OnGetNewGame(Game newGame)
+        
+        public IActionResult OnGetNewGame(Game newGame)
         {
             if (newGame == null)
             {
                 throw new NullReferenceException("newGame is null");
             }
             this.Game = newGame;
+            WriteNewGameToDatabase(this.Game);
+            return Page();
         }
+        
+        //GamesController
+        public void WriteNewGameToDatabase(Game newGame)
+        {
+            _gameRepository.AddGame(newGame);
+            foreach (var player in newGame.Players)
+            {
+                _playerRepository.AddPlayer(player);
+            }
+        }
+        
 
         public IActionResult OnGet()
         {

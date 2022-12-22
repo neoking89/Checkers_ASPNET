@@ -14,6 +14,7 @@ public class GameContext : DbContext
 {
     public DbSet<Game> Games { get; set; }
     public DbSet<Player> Players { get; set; }
+    public DbSet<Piece> Pieces { get; set; }
     public GameContext
     (
         DbContextOptions<GameContext> options
