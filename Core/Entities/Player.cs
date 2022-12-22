@@ -17,10 +17,8 @@ namespace Core.Entities
         public string? Name { get; set; }
         public Color Color { get; set; }
         public bool ToPlay { get; set; }
-        [NotMapped]
-        public ICollection<Game?>? Games { get; set; }
-
-        public Player() { }
+		//public ICollection<Participation> Participations { get; set; }
+		public Player() { }
         public Player(string name = "", Color color = Color.White) 
         {
             Name = name;

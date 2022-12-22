@@ -18,7 +18,7 @@ namespace Checkers.Pages
             _playerRepository = playerRepository;
         }
         
-        public IActionResult OnGetNewGame(string? playerNames)
+        public async Task<IActionResult> OnGetNewGame(string? playerNames)
         {
             if (playerNames != null)
             {
@@ -26,19 +26,18 @@ namespace Checkers.Pages
                 var whitePlayer = new Player(splittedString[0], Color.White);
                 var blackPlayer = new Player(splittedString[1], Color.Black);
                 this.Game = new Game(whitePlayer, blackPlayer);
-                WriteNewGameToDatabase(this.Game);
+				await WriteNewGameToDatabase(this.Game);
             }
             return Page();
         }
         
-        //GamesController
-        public void WriteNewGameToDatabase(Game newGame)
+        //Need to move to GamesController
+        public async Task WriteNewGameToDatabase(Game newGame)
         {
-            _gameRepository.AddGame(newGame);
-            //_playerRepository.AddPlayer(newGame.WhitePlayer);
-			//_playerRepository.AddPlayer(newGame.BlackPlayer);
-
-		}
+            await _gameRepository.AddGame(newGame);
+            await _playerRepository.AddPlayer(newGame.WhitePlayer!);
+            await _playerRepository.AddPlayer(newGame.BlackPlayer!);
+        }
 
         public IActionResult OnGet()
         {

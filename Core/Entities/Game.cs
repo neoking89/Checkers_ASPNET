@@ -17,27 +17,18 @@ public class Game
     [Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public int Id { get; set; }
-    //[ForeignKey("WhitePlayerId")]
-    [NotMapped]
-	public Player? WhitePlayer { get; set; }
-    public int WhitePlayerId { get; set; }
-    [ForeignKey("BlackPlayerId")]
-    [NotMapped]
-	public Player? BlackPlayer { get; set; }
-	//public int BlackPlayerId { get; set; }
-	public DateTime? TimeCreated { get; set; } = DateTime.Now;
-	public bool IsOver { get; set; } = false;
-	[NotMapped]
-    public Board Board { get; set; } = new Board();
-    [NotMapped]
-    public ICollection<Piece> Pieces { get; set; } = new List<Piece>();
-    [NotMapped]
-    public ICollection<string> Moves { get; set; } = new List<string>();
+    public DateTime? TimeCreated { get; set; } = DateTime.Now;
+    public bool IsOver { get; set; } = false;
+	[NotMapped] public Player? WhitePlayer { get; set; }
+	[NotMapped] public Player? BlackPlayer { get; set; }
+	[NotMapped] public Board Board { get; set; } = new Board();
+	[NotMapped] public ICollection<Piece> Pieces { get; set; } = new List<Piece>();
+	[NotMapped] public ICollection<string> Moves { get; set; } = new List<string>();
     public Game()
     {
         InitializePiecesOnBoard(Board);
     }
-    public Game(Player whitePlayer, Player blackPlayer) : this()
+    public Game(Player? whitePlayer, Player? blackPlayer) : this()
     {
 		WhitePlayer = whitePlayer;
         BlackPlayer = blackPlayer;
@@ -48,7 +39,11 @@ public class Game
 	/// </summary>
 	public bool Start()
     {
-        while (!IsOver)
+		if (WhitePlayer == null || BlackPlayer == null)
+		{
+			throw new NullReferenceException("Both players must be set before starting a game.");
+		}
+		while (!IsOver)
         {
             Turn(WhitePlayer);
 			Turn(BlackPlayer);

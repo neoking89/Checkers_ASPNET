@@ -24,7 +24,7 @@ public class PlayerRepository : IPlayerRepository
 
     public async Task AddPlayer(Player player)
     {
-        _context.Players.Add(player);
+        await _context.Players.AddAsync(player);
         await _context.SaveChangesAsync();
     }
 
