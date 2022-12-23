@@ -10,16 +10,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddDbContext<GameContext>(options =>
-{
-	options.UseInMemoryDatabase("tempdb");
-});
-
-
 //builder.Services.AddDbContext<GameContext>(options =>
 //{
-//	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true;TrustServerCertificate=true");
+//	options.UseInMemoryDatabase("tempdb");
 //});
+
+
+builder.Services.AddDbContext<GameContext>(options =>
+{
+	options.UseSqlServer("server=.;Initial Catalog=Checkers;integrated security=true;TrustServerCertificate=true");
+});
 
 
 builder.Services.AddScoped<IGameRepository, GameRepository>();

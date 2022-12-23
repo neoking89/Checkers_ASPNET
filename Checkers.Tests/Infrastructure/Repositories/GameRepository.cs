@@ -26,7 +26,7 @@ public class GameRepositoryTests
 	}
 
 	[Test]
-	public async Task GameRepositoryAddgame_gamesAddedToDbAndFoundSuccesfullyById_ShouldBelEqual()
+	public async Task GameRepositoryAddGame_gamesAddedToDbAndFoundSuccesfullyById_ShouldBelEqual()
 	{
 		// Arrange
 		var player1 = new Player

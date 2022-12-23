@@ -8,23 +8,18 @@ namespace Checkers.Pages
     public class StatisticsModel : PageModel
     {
         private readonly IPlayerRepository _playerRepository;
-        [BindProperty] public string Name { get; set; } = "No Value";
+        [BindProperty] public string Name { get; set; }
 
         public StatisticsModel(IPlayerRepository playerRepository)
         {
             _playerRepository = playerRepository;
         }
-        public IActionResult OnGet()
-        {  
+        public async Task<IActionResult> OnGet()
+        {
+            var players = await _playerRepository.GetAllPlayers();
+            this.Name = players.Last().Name ?? "Niemand";
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
-        {
-            var players = await _playerRepository.GetAllPlayers();
-            this.Name = players.Last().Name ?? "No players";
-
-            return Content(Name);
-        }
     }
 }
