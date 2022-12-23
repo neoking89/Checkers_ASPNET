@@ -37,5 +37,10 @@ namespace Core.GameElements
 			Time = new TimeSpan();
 			IsRunning = false;
 		}
+
+		public override string ToString()
+		{
+			return Time.ToString();
+		}
 	}
 }

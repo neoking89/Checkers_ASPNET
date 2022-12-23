@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-
 public class PlayerRepository : IPlayerRepository
 {
     private readonly GameContext _context;

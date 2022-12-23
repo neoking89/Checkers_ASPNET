@@ -12,7 +12,9 @@ namespace Checkers.Pages
         private readonly IGameRepository _gameRepository;
         private readonly IPlayerRepository _playerRepository;
         [BindProperty] public Game? Game { get; set; }
-        public GameModel(IGameRepository gameRepository, IPlayerRepository playerRepository)
+		[BindProperty] public string TimeWhitePlayer => Game?.WhitePlayer?.TimeUsed.ToString() ?? "";
+		[BindProperty] public string TimeBlackPlayer => Game?.BlackPlayer?.TimeUsed.ToString() ?? "";
+		public GameModel(IGameRepository gameRepository, IPlayerRepository playerRepository)
         {
             _gameRepository = gameRepository;
             _playerRepository = playerRepository;

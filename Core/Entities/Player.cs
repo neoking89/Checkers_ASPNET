@@ -18,7 +18,7 @@ namespace Core.Entities
         public string? Name { get; set; }
         public Color Color { get; set; }
         public bool ToPlay { get; set; }
-        public Stopwatch TimeUsed { get; set; } = new();
+        [NotMapped] public Stopwatch TimeUsed { get; set; } = new();
 		//public ICollection<Participation> Participations { get; set; }
 		public Player() { }
         public Player(string name = "", Color color = Color.White) 
