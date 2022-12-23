@@ -18,6 +18,7 @@ namespace Checkers.Pages
             _playerRepository = playerRepository;
         }
         
+        // Move to Controller
         public async Task<IActionResult> OnGetNewGame(string? playerNames)
         {
             if (playerNames != null)

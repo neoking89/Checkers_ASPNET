@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Core.GameElements;
 
 namespace Core.Entities
 {
@@ -17,6 +18,7 @@ namespace Core.Entities
         public string? Name { get; set; }
         public Color Color { get; set; }
         public bool ToPlay { get; set; }
+        public Stopwatch TimeUsed { get; set; } = new();
 		//public ICollection<Participation> Participations { get; set; }
 		public Player() { }
         public Player(string name = "", Color color = Color.White) 
@@ -26,7 +28,27 @@ namespace Core.Entities
             ToPlay = color == Color.White ? true : false;
         }
 
-        public override string ToString()
+		public void StartClock()
+		{
+			TimeUsed.Start();
+		}
+
+		public void StopClock()
+		{
+			TimeUsed.Stop();
+		}
+
+		public void ResetClock()
+		{
+			TimeUsed.Reset();
+		}
+
+		public void SwitchTurn()
+		{
+			ToPlay = !ToPlay;
+		}
+
+		public override string ToString()
         {
             return $"{Name} ({Color})";
         }
