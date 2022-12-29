@@ -19,7 +19,8 @@ public class Game
 	public int Id { get; set; }
     public DateTime? TimeCreated { get; set; } = DateTime.Now;
     public bool IsOver { get; set; } = false;
-	[NotMapped] public Player? WhitePlayer { get; set; }
+    public virtual ICollection<Participation> Participations { get; set; }
+    [NotMapped] public Player? WhitePlayer { get; set; }
 	[NotMapped] public Player? BlackPlayer { get; set; }
 	[NotMapped] public Board Board { get; set; } = new Board();
 	[NotMapped] public ICollection<Piece> Pieces { get; set; } = new List<Piece>();

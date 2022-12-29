@@ -16,10 +16,10 @@ namespace Core.Entities
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
         public string? Name { get; set; }
+        public virtual ICollection<Participation> Participations { get; set; }
         public Color Color { get; set; }
         public bool ToPlay { get; set; }
         [NotMapped] public Stopwatch TimeUsed { get; set; } = new();
-		//public ICollection<Participation> Participations { get; set; }
 		public Player() { }
         public Player(string name = "", Color color = Color.White) 
         {
